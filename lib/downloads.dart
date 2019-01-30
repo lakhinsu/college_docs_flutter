@@ -6,8 +6,18 @@ class downloads extends StatefulWidget {
   @override
   _downloads createState() =>_downloads();
 }
-class _downloads extends State<downloads> {
+class _downloads extends State<downloads> with TickerProviderStateMixin {
 
+  Animation<double> animation;
+  AnimationController _controller;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _controller=AnimationController(vsync: this,duration: Duration(milliseconds: 2000));
+    _controller.repeat();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +32,12 @@ class _downloads extends State<downloads> {
             // the App.build method, and use it to set our appbar title.
             title: Text("downloads"),
             actions: <Widget>[
-              IconButton(
+              RotationTransition(
+              child:IconButton(
                 icon: Icon(Icons.settings),
                 onPressed: (){Navigator.pushNamed(context,'/settings');},
+              ),
+                turns: _controller,
               )
             ],
 

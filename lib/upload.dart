@@ -6,9 +6,18 @@ class uploads extends StatefulWidget {
   @override
   _uploads createState() =>_uploads();
 }
-class _uploads extends State<uploads> {
+class _uploads extends State<uploads> with TickerProviderStateMixin {
+
+  Animation<double> animation;
+  AnimationController _controller;
 
 
+  @override
+  void initState() {
+    super.initState();
+    _controller=AnimationController(vsync: this,duration: Duration(milliseconds: 2000));
+    _controller.repeat();
+  }
   @override
   Widget build(BuildContext context) {
     return new Theme(
@@ -22,10 +31,13 @@ class _uploads extends State<uploads> {
         // the App.build method, and use it to set our appbar title.
         title: Text("Uploads"),
     actions: <Widget>[
-    IconButton(
+    RotationTransition(
+      child:IconButton(
     icon: Icon(Icons.settings),
-    onPressed: (){Navigator.pushNamed(context,'/settings');},
-    )
+    onPressed: (){Navigator.pushNamed(context,'/settings');
+    },
+    ),
+    turns: _controller,)
     ],
 
     ),

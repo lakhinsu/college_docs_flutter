@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
+      title: 'College Docs Flutter',
       theme: ThemeData.dark(),
       routes:{
         '/downloads':(Context)=>downloads(),
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         '/settings': (context) => settings(),
 
       },
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'College Docs Flutter'),
     );
   }
 }
@@ -40,7 +40,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
   static bool _night = false;
   String name;
 
+ Animation<double> animation;
+ AnimationController _controller;
 
+
+  @override
+  void initState() {
+    super.initState();
+    _controller=AnimationController(vsync: this,duration: Duration(milliseconds: 2000));
+    _controller.repeat();
+  }
 
   Widget userInput = Container(
     margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
@@ -77,9 +86,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
           actions: <Widget>[
-            IconButton(
+            RotationTransition(
+            child:IconButton(
               icon: Icon(Icons.settings),
               onPressed: (){Navigator.pushNamed(context,'/settings');},
+            ),
+              turns: _controller,
             )
           ],
 
