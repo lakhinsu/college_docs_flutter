@@ -3,6 +3,7 @@ import 'settings.dart';
 import 'themes.dart' as themes;
 import 'downloads.dart';
 import 'upload.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
@@ -40,6 +41,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
   static bool _night = false;
   String name;
 
+  SharedPreferences _prefs;
+  static const String colorprefs="colorprefs";
+  static const String mail="mail";
+  static const String down="down";
+  static const String email = "email";
+
  Animation<double> animation;
  AnimationController _controller;
 
@@ -49,15 +56,30 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
     super.initState();
     _controller=AnimationController(vsync: this,duration: Duration(milliseconds: 2000));
     _controller.repeat();
+    /*SharedPreferences.getInstance() ..then((prefs){
+      setState(() {
+        this._prefs=prefs;
+        _loadPrefs();
+      });
+    });*/
+    _test();
+
+  }
+  void _test() async{
+    _prefs=await SharedPreferences.getInstance();
+    _loadPrefs();
   }
 
-  Widget userInput = Container(
-    margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
-    padding: EdgeInsets.all(20),
-    child: TextField(
-      decoration: InputDecoration(labelText: "Enter Email"),
-    ),
-  );
+  void _loadPrefs(){
+    setState(() {
+      themes.color=this._prefs.getString(colorprefs);
+      name=themes.color;
+      themes.mail=this._prefs.getBool(mail);
+      themes.down=this._prefs.getBool(down);
+      themes.email=this._prefs.getString(email);
+    });
+  }
+
 
   void _changeMode() {
     if (themes.isNight) {

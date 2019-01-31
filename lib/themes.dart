@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 String color="Brown";
+bool mail=true;
+bool down=true;
 bool isNight=false;
+String email="setemail";
 
 
 ThemeData dark = ThemeData(
