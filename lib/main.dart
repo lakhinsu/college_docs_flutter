@@ -3,7 +3,11 @@ import 'settings.dart';
 import 'themes.dart' as themes;
 import 'downloads.dart';
 import 'upload.dart';
+import 'dart:collection';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'downloadpage.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,6 +21,7 @@ class MyApp extends StatelessWidget {
         '/downloads':(Context)=>downloads(),
         '/uploads':(Context)=>uploads(),
         '/settings': (context) => settings(),
+        '/downpage':(Context) =>downscreen(),
 
       },
       home: MyHomePage(title: 'College Docs Flutter'),
@@ -41,6 +46,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
   static bool _night = false;
   String name;
 
+  bool loaded=false;
+
   SharedPreferences _prefs;
   static const String colorprefs="colorprefs";
   static const String mail="mail";
@@ -50,6 +57,10 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
  Animation<double> animation;
  AnimationController _controller;
 
+  LinkedHashMap<dynamic,dynamic> x;
+  Iterable<dynamic> y;
+
+  List<String> items=new List();
 
   @override
   void initState() {
@@ -63,11 +74,26 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
       });
     });*/
     _test();
-
   }
   void _test() async{
     _prefs=await SharedPreferences.getInstance();
     _loadPrefs();
+  }
+
+   Future _test2() async{
+    print('test2');
+    FirebaseDatabase database2 = new FirebaseDatabase();
+    DatabaseReference _userRef2 = database2.reference().child('FileInformation')
+        .child('3rd Year').child('SEM VI').child("AdJava");
+
+    DataSnapshot snapshot2=await _userRef2.once();
+    x=snapshot2.value;
+    y=x.keys;
+    //print(y.elementAt(0));
+    for(int i=0;i<y.length;i++) {
+      print(y.elementAt(i));
+      items.add(y.elementAt(i));
+    }
   }
 
   void _loadPrefs(){
@@ -97,7 +123,27 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
         child: FlutterLogo(size: 42), backgroundColor: Colors.white),
   );
 
+  Widget _list(){
+    _test2().then((onValue){
+      if(loaded==false) {
+        setState(() {
+          loaded=true;
+        });
+      }
+    });
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          trailing: IconButton(icon: Icon(Icons.file_download), onPressed: (){
+            print(index);
+          }),
+          title: Text('${items[index]}'),
+        );
+      },
+    );
 
+  }
   @override
   Widget build(BuildContext context) {
     return new Theme(
@@ -154,8 +200,110 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                 new Divider(),
               ],
             )),
-        body:Center(
-          child: Text("Main Screen"),
+        body:Column(
+          children: <Widget>[
+            Expanded(
+            child:Row(
+              children: <Widget>[
+                Expanded(
+                child:Container(
+                  height:400,
+                 padding: EdgeInsets.all(30),
+                  child: Card(
+                      color:themes.cardColor(),
+                      child:FlatButton(onPressed: (){
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (__) => new downscreen(sub:"AdJava")));
+                      }, child: Text("Java"))),
+                ),),
+                Expanded(
+                  flex: 1,
+                child:Container(
+                  height:400,
+                  padding: EdgeInsets.all(30),
+                  child: Card(
+                      color:themes.cardColor(),
+                      child:FlatButton(onPressed: (){
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (__) => new downscreen(sub:"WebTech")));
+                      }, child: Text("Web"))),
+                ),),
+              ],
+            ),
+            ),
+            Expanded(
+              flex: 1,
+              child:Row(
+                children: <Widget>[
+                  Expanded(
+                    child:Container(
+                      height:400,
+                      padding: EdgeInsets.all(30),
+                      child: Card(
+                          color:themes.cardColor(),
+                          child:FlatButton(onPressed: (){
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (__) => new downscreen(sub:"SE")));
+                          }, child: Text("SE"))),
+                    ),),
+                  Expanded(
+                    flex: 1,
+                    child:Container(
+                      height:400,
+                      padding: EdgeInsets.all(30),
+                      child: Card(
+                          color:themes.cardColor(),
+                          child:FlatButton(onPressed: (){
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (__) => new downscreen(sub:"DataComp")));
+                          }, child: Text("DCDR"))),
+                    ),),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child:Row(
+                children: <Widget>[
+                  Expanded(
+                    child:Container(
+                      height:400,
+                      padding: EdgeInsets.all(30),
+                      child: Card(
+                          color:themes.cardColor(),
+                          child:FlatButton(onPressed: (){
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (__) => new downscreen(sub:"DOS")));
+                          }, child: Text("DOS"))),
+                    ),),
+                  Expanded(
+                    flex: 1,
+                    child:Container(
+                      height:400,
+                      padding: EdgeInsets.all(30),
+                      child: Card(
+                          color:themes.cardColor(),
+                          child:FlatButton(onPressed: (){
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (__) => new downscreen(sub:"DotNet")));
+                          }, child: Text(".Net"))),
+                    ),),
+                ],
+              ),
+            ),
+          ],
         )
       ),
     );

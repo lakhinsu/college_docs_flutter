@@ -64,3 +64,20 @@ ThemeData themeChoser(String color) {
   }
 }
 
+Color cardColor(){
+  if (isNight)
+    return Colors.black87;
+  else {
+    if (color=="Yellow")
+      return Colors.yellow;
+    else if (color=="Red")
+      return Colors.red;
+    else if (color=="Pink")
+      return Colors.pink;
+    else if (color=="Orange")
+      return Colors.orange;
+    else
+      return Colors.brown;
+  }
+}
+
