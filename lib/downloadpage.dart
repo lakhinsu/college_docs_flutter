@@ -19,8 +19,8 @@ class _downscreenState extends State<downscreen>  with TickerProviderStateMixin{
   AnimationController _controller;
 
 
-  LinkedHashMap<dynamic,dynamic> x;
-  Iterable<dynamic> y;
+  LinkedHashMap<dynamic,dynamic> x=new LinkedHashMap();
+  Iterable<dynamic> y=new Iterable.empty();
   List<String> items=new List();
 
   bool loaded=false;
@@ -32,6 +32,7 @@ class _downscreenState extends State<downscreen>  with TickerProviderStateMixin{
     super.initState();
     _controller=AnimationController(vsync: this,duration: Duration(milliseconds: 2000));
     _controller.repeat();
+
   }
 
   Future _test2() async{
@@ -44,6 +45,9 @@ class _downscreenState extends State<downscreen>  with TickerProviderStateMixin{
     x=snapshot2.value;
     y=x.keys;
     //print(y.elementAt(0));
+    if(items.isNotEmpty){
+      items=new List();
+    }
     for(int i=0;i<y.length;i++) {
       print(y.elementAt(i));
       items.add(y.elementAt(i));

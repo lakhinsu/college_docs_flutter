@@ -7,7 +7,6 @@ import 'dart:collection';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'downloadpage.dart';
-import 'package:splashscreen/splashscreen.dart';
 
 void main() => runApp(MyApp());
 
