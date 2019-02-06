@@ -37,7 +37,7 @@ class _settings extends State<settings> {
   //static String _color = "Brown";
   String name;
 
-  static const menuItems = <String>['Brown', 'Red', 'Yellow', 'Pink', 'Orange'];
+  static const menuItems = <String>['Brown', 'Red', 'Purple', 'Pink', 'Orange'];
 
   static final List<DropdownMenuItem<String>> _dropDownMenu = menuItems
       .map((String value) => DropdownMenuItem<String>(
@@ -78,94 +78,103 @@ class _settings extends State<settings> {
               }),
           title: Text("Settings"),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
-              padding: EdgeInsets.all(20),
-              child: TextField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(labelText: "Email Address:",helperText: "Saved : $helper"),
-                onChanged: (String val) {
-                  if(val!=null)
-                  tempmail = val;
-                },
+        body: SingleChildScrollView(
+          physics: PageScrollPhysics(),
+                  child: Center(
+            child: Column(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                child: TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: (
+                      InputDecoration(border: OutlineInputBorder(borderRadius:BorderRadius.circular(5.0)),labelText: "Email Address:",helperText: "Saved : $helper")
+                    ),
+                    onChanged: (String val) {
+                      if(val!=null)
+                      tempmail = val;
+                    },
+                ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              padding: EdgeInsets.all(20),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          'Send Mail:  ',
-                          style: TextStyle(fontSize: 24),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                padding: EdgeInsets.all(20),
+                child: Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              'Send Mail:  ',
+                              style: TextStyle(fontSize: 24),
+                            ),
+                            Checkbox(
+                              value: themes.mail,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  themes.mail = value;
+                                });
+                              },
+                            )
+                          ],
                         ),
-                        Checkbox(
-                          value: themes.mail,
-                          onChanged: (bool value) {
-                            setState(() {
-                              themes.mail = value;
-                            });
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          'Download:  ',
-                          style: TextStyle(fontSize: 24),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              'Download:  ',
+                              style: TextStyle(fontSize: 24),
+                            ),
+                            Checkbox(
+                              value: themes.down,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  themes.down = value;
+                                });
+                              },
+                            )
+                          ],
                         ),
-                        Checkbox(
-                          value: themes.down,
-                          onChanged: (bool value) {
-                            setState(() {
-                              themes.down = value;
-                            });
-                          },
-                        )
-                      ],
-                    ),
+                      ),
+                      Container(
+                          margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
+                          child: RaisedButton(
+                              child: Text('Save'),
+                              onPressed: () {
+                                this._setColorPrefs(themes.color);
+                                this._setDownPrefs(themes.down);
+                                this._setMailPrefs(themes.mail);
+                                this._setEmailPrefs(tempmail);
+                                Navigator.pop(context);
+                              })),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        padding: EdgeInsets.all(20),
+                        child: Card(
+                          color: themes.cardColor(),
+                            child: ListTile(
+                            title: Text("Select Theme"),
+                            trailing: DropdownButton(
+                                value: themes.color,
+                                items: _dropDownMenu,
+                                onChanged: (String value) {
+                                  setState(() {
+                                    themes.color = value;
+                                  });
+                                }),
+                          ),
+                        ),
+                      )
+                    ],
+                ),
+              )
+            ],
+          ),
                   ),
-                  Container(
-                      margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
-                      child: OutlineButton(
-                          child: Text('Save'),
-                          onPressed: () {
-                            this._setColorPrefs(themes.color);
-                            this._setDownPrefs(themes.down);
-                            this._setMailPrefs(themes.mail);
-                            this._setEmailPrefs(tempmail);
-                            Navigator.pop(context);
-                          })),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    padding: EdgeInsets.all(20),
-                    child: ListTile(
-                      title: Text("Select Theme"),
-                      trailing: DropdownButton(
-                          value: themes.color,
-                          items: _dropDownMenu,
-                          onChanged: (String value) {
-                            setState(() {
-                              themes.color = value;
-                            });
-                          }),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
         ),
       ),
     );

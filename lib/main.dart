@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
       title: 'College Docs Flutter',
       theme: ThemeData.dark(),
       routes:{
-        '/downloads':(Context)=>downloads(),
-        '/uploads':(Context)=>uploads(),
+        '/downloads':(context)=>downloads(),
+        '/uploads':(con2text)=>uploads(),
         '/settings': (context) => settings(),
-        '/downpage':(Context) =>downscreen(),
+        '/downpage':(context) =>downscreen(),
 
       },
       home: MyHomePage(title: 'College Docs Flutter'),
@@ -99,8 +99,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
     setState(() {
       themes.color=this._prefs.getString(colorprefs);
       name=themes.color;
-      themes.mail=this._prefs.getBool(mail);
-      themes.down=this._prefs.getBool(down);
+      themes.mail=this._prefs.getBool(mail) ?? true;
+      themes.down=this._prefs.getBool(down) ?? true;
       themes.email=this._prefs.getString(email);
     });
   }
@@ -177,16 +177,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                 ),
                 new Divider(),
                 ListTile(
-                  leading: Icon(Icons.cloud_download),
-                  title: Text(
-                    'Downloads',
-                  ),
-                  onTap: (){
-                    Navigator.pushNamed(context,'/downloads');
-                  },
-                ),
-                new Divider(),
-                ListTile(
                   leading: Icon(Icons.brightness_2),
                   title: Text('Night Mode'),
                   trailing: Switch(
@@ -199,110 +189,112 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
                 new Divider(),
               ],
             )),
-        body:Column(
-          children: <Widget>[
-            Expanded(
-            child:Row(
-              children: <Widget>[
-                Expanded(
-                child:Container(
-                  height:400,
-                 padding: EdgeInsets.all(30),
-                  child: Card(
-                      color:themes.cardColor(),
-                      child:FlatButton(onPressed: (){
-                        Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (__) => new downscreen(sub:"AdJava")));
-                      }, child: Text("Java"))),
-                ),),
-                Expanded(
-                  flex: 1,
-                child:Container(
-                  height:400,
-                  padding: EdgeInsets.all(30),
-                  child: Card(
-                      color:themes.cardColor(),
-                      child:FlatButton(onPressed: (){
-                        Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (__) => new downscreen(sub:"WebTech")));
-                      }, child: Text("Web"))),
-                ),),
-              ],
-            ),
-            ),
-            Expanded(
-              flex: 1,
+        body:Center(
+                  child: Column(
+            children: <Widget>[
+              Expanded(
               child:Row(
                 children: <Widget>[
                   Expanded(
-                    child:Container(
-                      height:400,
-                      padding: EdgeInsets.all(30),
-                      child: Card(
-                          color:themes.cardColor(),
-                          child:FlatButton(onPressed: (){
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (__) => new downscreen(sub:"SE")));
-                          }, child: Text("SE"))),
-                    ),),
+                  child:Container(
+                    height:400,
+                   padding: EdgeInsets.all(30),
+                    child: Card(
+                        color:themes.cardColor(),
+                        child:FlatButton(onPressed: (){
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (__) => new downscreen(sub:"AdJava")));
+                        }, child: Text("Java"))),
+                  ),),
                   Expanded(
                     flex: 1,
-                    child:Container(
-                      height:400,
-                      padding: EdgeInsets.all(30),
-                      child: Card(
-                          color:themes.cardColor(),
-                          child:FlatButton(onPressed: (){
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (__) => new downscreen(sub:"DataComp")));
-                          }, child: Text("DCDR"))),
-                    ),),
+                  child:Container(
+                    height:400,
+                    padding: EdgeInsets.all(30),
+                    child: Card(
+                        color:themes.cardColor(),
+                        child:FlatButton(onPressed: (){
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (__) => new downscreen(sub:"WebTech")));
+                        }, child: Text("Web"))),
+                  ),),
                 ],
               ),
-            ),
-            Expanded(
-              flex: 1,
-              child:Row(
-                children: <Widget>[
-                  Expanded(
-                    child:Container(
-                      height:400,
-                      padding: EdgeInsets.all(30),
-                      child: Card(
-                          color:themes.cardColor(),
-                          child:FlatButton(onPressed: (){
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (__) => new downscreen(sub:"DOS")));
-                          }, child: Text("DOS"))),
-                    ),),
-                  Expanded(
-                    flex: 1,
-                    child:Container(
-                      height:400,
-                      padding: EdgeInsets.all(30),
-                      child: Card(
-                          color:themes.cardColor(),
-                          child:FlatButton(onPressed: (){
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (__) => new downscreen(sub:"DotNet")));
-                          }, child: Text(".Net"))),
-                    ),),
-                ],
               ),
-            ),
-          ],
+              Expanded(
+                flex: 1,
+                child:Row(
+                  children: <Widget>[
+                    Expanded(
+                      child:Container(
+                        height:400,
+                        padding: EdgeInsets.all(30),
+                        child: Card(
+                            color:themes.cardColor(),
+                            child:FlatButton(onPressed: (){
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (__) => new downscreen(sub:"SE")));
+                            }, child: Text("SE"))),
+                      ),),
+                    Expanded(
+                      flex: 1,
+                      child:Container(
+                        height:400,
+                        padding: EdgeInsets.all(30),
+                        child: Card(
+                            color:themes.cardColor(),
+                            child:FlatButton(onPressed: (){
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (__) => new downscreen(sub:"DataComp")));
+                            }, child: Text("DCDR"))),
+                      ),),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child:Row(
+                  children: <Widget>[
+                    Expanded(
+                      child:Container(
+                        height:400,
+                        padding: EdgeInsets.all(30),
+                        child: Card(
+                            color:themes.cardColor(),
+                            child:FlatButton(onPressed: (){
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (__) => new downscreen(sub:"DOS")));
+                            }, child: Text("DOS"))),
+                      ),),
+                    Expanded(
+                      flex: 1,
+                      child:Container(
+                        height:400,
+                        padding: EdgeInsets.all(30),
+                        child: Card(
+                            color:themes.cardColor(),
+                            child:FlatButton(onPressed: (){
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (__) => new downscreen(sub:"DotNet")));
+                            }, child: Text(".Net"))),
+                      ),),
+                  ],
+                ),
+              ),
+            ],
+          ),
         )
       ),
     );

@@ -10,18 +10,19 @@ class _downloads extends State<downloads> with TickerProviderStateMixin {
 
   Animation<double> animation;
   AnimationController _controller;
-
+List<String> files;
 
   @override
   void initState() {
     super.initState();
     _controller=AnimationController(vsync: this,duration: Duration(milliseconds: 2000));
     _controller.repeat();
+  
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Theme(
+    return Theme(
         data:themes.themeChoser(themes.color),
         child: Scaffold(
           appBar: AppBar(
@@ -30,7 +31,7 @@ class _downloads extends State<downloads> with TickerProviderStateMixin {
             }),
             // Here we take the value from the MyHomePage object that was created by
             // the App.build method, and use it to set our appbar title.
-            title: Text("downloads"),
+            title: Text("Downloads"),
             actions: <Widget>[
               RotationTransition(
               child:IconButton(
@@ -42,7 +43,7 @@ class _downloads extends State<downloads> with TickerProviderStateMixin {
             ],
 
           ),
-          body: Center(child: Text("Upload Screen"),),
+          body:Center(child:Text("Coming Soon"),),
         )
     );
   }

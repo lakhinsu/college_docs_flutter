@@ -206,58 +206,63 @@ class _uploads extends State<uploads> with TickerProviderStateMixin {
               )
             ],
           ),
-          body: Center(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
-                  padding: EdgeInsets.all(20),
-                  child: TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(labelText: "File Name",helperText: "Don't keep blank spaces"),
-                    onChanged: (String val) {
-                      if(val!=null)
-                        _ufilename = val;
+          body: SingleChildScrollView(
+            physics: PageScrollPhysics(),
+                      child: Center(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                    padding: EdgeInsets.all(20),
+                    child: TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(border: OutlineInputBorder(borderRadius:BorderRadius.circular(5.0)),labelText: "File Name",helperText: "Don't keep blank spaces"),
+                      onChanged: (String val) {
+                        if(val!=null)
+                          _ufilename = val;
+                      },
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0,25,0, 10),
+                    padding: EdgeInsets.all(20),
+                    child: Card(
+                        color: themes.cardColor(),
+                        child: ListTile(
+                        title: Text("Select Subject"),
+                        trailing: DropdownButton(
+                            value:sub,
+                            items: _dropDownMenu,
+                            onChanged: (String value) {
+                              setState(() {
+                                sub=value;
+                                print(_ufilename);
+                                print(sub);
+                              });
+                            }),
+                      ),
+                    )
+                  ),
+                  RaisedButton(
+                      child: Text("Select"),
+                      onPressed: () {
+                        _openFileExplorer();
+                      }),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0,10, 0, 10),
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      _path==null?"NO Files Selected":_path,
+                    ),
+                  ),
+                  RaisedButton(
+                    child: Text('Upload'),
+                    onPressed: (){
+                        _upload();
                     },
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0,25,0, 10),
-                  padding: EdgeInsets.all(20),
-                  child: ListTile(
-                    title: Text("Select Theme"),
-                    trailing: DropdownButton(
-                        value:sub,
-                        items: _dropDownMenu,
-                        onChanged: (String value) {
-                          setState(() {
-                            sub=value;
-                            print(_ufilename);
-                            print(sub);
-                          });
-                        }),
                   )
-                ),
-
-                RaisedButton(
-                    child: Text("Select"),
-                    onPressed: () {
-                      _openFileExplorer();
-                    }),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0,10, 0, 10),
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    _path==null?"NO Files Selected":_path,
-                  ),
-                ),
-                RaisedButton(
-                  child: Text('Upload'),
-                  onPressed: (){
-                      _upload();
-                  },
-                )
-              ],
+                ],
+              ),
             ),
           ),
         ));
