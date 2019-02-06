@@ -204,7 +204,8 @@ Future<void> _getPermissions() async {
       String newurl = upath;
       Flushbar notice=showNotice("Please Check Your Mail After A Delay...");
       notice.show(context);
-      String funtrigger = "https://us-central1-collegedocs2.cloudfunctions.net/filemailer/" + "?mail=hinsulak@gmail.com" + "&filename=" + fname + "." + ext + "&pathh=" + newurl + "&altt=media" + "&tokenn=" + token;
+      print(themes.email);
+      String funtrigger = "https://us-central1-collegedocs2.cloudfunctions.net/filemailer/" + "?mail="+themes.email + "&filename=" + fname + "." + ext + "&pathh=" + newurl + "&altt=media" + "&tokenn=" + token;
       var response = await http.get(funtrigger);
       }
       else{
